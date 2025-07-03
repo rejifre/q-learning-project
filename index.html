@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aprendizagem por Reforço - Projeto II</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/src/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Aprendizagem por Reforço - Projeto II</h1>
+      <p>
+        Este projeto é uma implementação de um agente de aprendizagem por
+        reforço utilizando o algoritmo Q-learning para resolver o problema do
+        labirinto.
+      </p>
+      <p>
+        <strong>Epsilon:</strong> Probabilidade de explorar ações aleatórias
+      </p>
+      <p>
+        <strong>Alpha:</strong> Taxa de aprendizado: Quanto o agente deve
+        ajustar seus conhecimentos com base na nova informação.
+      </p>
+      <p>
+        <strong>Gamma:</strong> Fator de desconto: Quanto o agente deve
+        valorizar recompensas futuras em relação às recompensas imediatas.
+      </p>
+    </header>
+    <main>
+      <section id="controls-section">
+        <button id="trainButton">Iniciar Treinamento</button>
+        <button id="resetButton">Parar</button>
+        <label for="episodesInput">Episódios:</label>
+        <input type="number" id="episodesInput" value="1000" min="100" />
+        <label for="epsilonInput">Epsilon:</label>
+        <input
+          type="number"
+          id="epsilonInput"
+          value="0.3"
+          step="0.01"
+          min="0"
+          max="1"
+          title="Epsilon-greedy: Probabilidade de explorar ações aleatórias"
+        />
+        <label for="alphaInput">Alpha:</label>
+        <input
+          type="number"
+          id="alphaInput"
+          value="0.1"
+          step="0.01"
+          min="0"
+          max="1"
+          title="Taxa de aprendizado: Quanto o agente deve ajustar seus conhecimentos com base na nova informação."
+        />
+        <label for="gammaInput">Gamma:</label>
+        <input
+          type="number"
+          id="gammaInput"
+          value="0.9"
+          step="0.01"
+          min="0"
+          max="1"
+          title="Fator de desconto: Quanto o agente deve valorizar recompensas futuras em relação às recompensas imediatas."
+        />
+      </section>
+      <section class="container">
+        <div id="map-container" class="main-content"></div>
+        <h2>Q-Table (Valores Máximos)</h2>
+        <div id="q-table-grid" class="q-grid"></div>
+        <div id="q-table-learning"></div>
+      </section>
+    </main>
+
+    <div class="info-panel">
+      <p><strong>Legenda do Mapa:</strong></p>
+      <ul>
+        <li><span class="cell free"></span> 1: Nó Livre</li>
+        <li><span class="cell obstacle"></span> -100: Obstáculo</li>
+        <li><span class="cell terminal"></span> 100: Terminal</li>
+        <li>
+          <span class="cell out-of-bounds"></span> -1: Fora do Mapa Relevante
+        </li>
+        <li>
+          <span class="cell agent"></span> P: Posição Atual do Agente (Caminho
+          Aprendido)
+        </li>
+      </ul>
+      <p><strong>Legenda da Q-Table:</strong></p>
+      <ul>
+        <li>
+          Cada célula mostra o <strong>maior valor Q</strong> para aquele
+          estado.
+        </li>
+        <li>
+          O agente tenderá a seguir a direção que corresponde ao maior valor Q.
+        </li>
+        <li>
+          Valores positivos indicam bom caminho, negativos indicam penalidade.
+        </li>
+      </ul>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
