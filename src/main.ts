@@ -23,6 +23,7 @@ class QLearningApp {
     this.#projectMap = new ProjectMap();
     // Inicializa o agente de Q-Learning com o mapa do projeto
     this.#qlearningAgent = new QLearningAgent(this.#projectMap);
+    // Botão de treinamento
     this.trainButton = document.getElementById(
       "trainButton"
     ) as HTMLButtonElement;
@@ -165,12 +166,23 @@ class QLearningApp {
     }
   }
 
+  /**
+   * Obtém a próxima posição do agente com base na ação escolhida.
+   * @param current A posição atual do agente
+   * @param actionIndex O índice da ação escolhida
+   * @returns A próxima posição do agente
+   */
   #getNextPosition(current: Vector2D, actionIndex: number): Vector2D {
     const [dr, dc] = MOVES[actionIndex];
     return new Vector2D(current.x + dr, current.y + dc);
   }
 
 
+  /**
+   *  Obtém o caminho aprendido pelo agente a partir de um ponto inicial.
+   * @param start Ponto de partida para o caminho aprendido
+   * @returns Um array de posições representando o caminho aprendido
+   */
   #getLearnedPath(start: Vector2D): Vector2D[] {
     let path: Vector2D[] = [start.clone()];
     let current = start.clone();
@@ -198,6 +210,13 @@ class QLearningApp {
     return path;
   }
 
+  /**
+   * Atualiza as informações exibidas na interface do usuário.
+   * @param current A posição atual do agente
+   * @param next A próxima posição do agente
+   * @param reward A recompensa recebida
+   * @param direction A direção da ação tomada (opcional)
+   */
   #updateInfo(current: Vector2D, next: Vector2D, reward: number, direction: number = 0) {
     this.agentPositionElement.textContent = `(${current.x}, ${current.y})`;
     this.agentNextPositionElement.textContent = `(${next.x}, ${next.y})`;
