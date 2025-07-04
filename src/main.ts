@@ -1,5 +1,5 @@
 import { QLearningAgent } from "./core/qLearningAgent";
-import { MOVES, Vector2D } from "./core/helpers";
+import { DIRECTIONS, MOVES, Vector2D } from "./core/helpers";
 import { ProjectMap } from "./core/projectMap";
 import { TableLearning } from "./core/tableLearning";
 
@@ -202,7 +202,7 @@ class QLearningApp {
     this.agentPositionElement.textContent = `(${current.x}, ${current.y})`;
     this.agentNextPositionElement.textContent = `(${next.x}, ${next.y})`;
     this.agentRewardElement.textContent = `${reward}`;
-    this.directionElement.textContent = `Direção: ${MOVES[direction].join(", ")}`;
+    this.directionElement.textContent = `Direção: ${DIRECTIONS.find(dir => dir.value === direction)?.name}`;
     const value = `Ação: ${direction}, Posição Atual: (${current.x}, ${current.y}), Próxima Posição: (${next.x}, ${next.y}), Recompensa: ${reward}`;
     console.log(value); // Log para depuração
   }

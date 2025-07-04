@@ -16,12 +16,12 @@ export class Vector2D {
   }
 }
 
-export const DIRECTIONS = {
-    CIMA: 0,    // Cima
-    BAIXO: 1,  // Baixo
-    ESQUERDA: 2,  // Esquerda
-    DIREITA: 3  // Direita
-};
+export const DIRECTIONS = [
+    { name: "CIMA", value: 0 },    // Cima
+    { name: "BAIXO", value: 1 },  // Baixo
+    { name: "ESQUERDA", value: 2 },  // Esquerda
+    { name: "DIREITA", value: 3 }  // Direita
+];
 
 // Definindo as ações (convenção: 0=cima, 1=baixo, 2=esquerda, 3=direita)
 export const MOVES = [
