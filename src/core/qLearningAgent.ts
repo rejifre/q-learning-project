@@ -85,10 +85,9 @@ export class QLearningAgent {
 
     if (cellValue === -1) {
       return this.projectMap.REWARD_OUT_OF_BOUNDS;
-    }
-    if (cellValue === 100) {
+    } else if (cellValue === 100) {
       return this.projectMap.REWARD_TERMINAL;
-    } else if (cellValue === -100 || cellValue === -1) {
+    } else if (cellValue === -100) {
       return this.projectMap.REWARD_OBSTACLE;
     } else {
       return this.projectMap.REWARD_FREE;
