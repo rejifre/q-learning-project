@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aprendizagem por Reforço - Projeto II</title>
-    <link rel="icon" href="/q-learning-project/assets/favicon-oLa0CTav.ico" type="image/x-icon" />
-    <script type="module" crossorigin src="/q-learning-project/assets/index-1-G3FXkv.js"></script>
-    <link rel="stylesheet" crossorigin href="/q-learning-project/assets/index-d_Dd5ZM4.css">
+    <link rel="icon" href="/assets/favicon-oLa0CTav.ico" type="image/x-icon" />
+    <script type="module" crossorigin src="/assets/index-BlII55dq.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-sQFdUXIQ.css">
   </head>
   <body>
     <header>
@@ -15,17 +15,6 @@
         Este projeto é uma implementação de um agente de aprendizagem por
         reforço utilizando o algoritmo Q-learning para resolver o problema do
         labirinto.
-      </p>
-      <p>
-        <strong>Epsilon:</strong> Probabilidade de explorar ações aleatórias
-      </p>
-      <p>
-        <strong>Alpha:</strong> Taxa de aprendizado: Quanto o agente deve
-        ajustar seus conhecimentos com base na nova informação.
-      </p>
-      <p>
-        <strong>Gamma:</strong> Fator de desconto: Quanto o agente deve
-        valorizar recompensas futuras em relação às recompensas imediatas.
       </p>
     </header>
     <main>
@@ -64,43 +53,67 @@
           max="1"
           title="Fator de desconto: Quanto o agente deve valorizar recompensas futuras em relação às recompensas imediatas."
         />
+        <div class="info-parameters">
+          <h2>Parâmetros do Agente</h2>
+          <ul>
+            <li>
+              <strong>Epsilon:</strong> Probabilidade de explorar ações
+              aleatórias (exploração vs. exploração).
+            </li>
+            <li>
+              <strong>Alpha:</strong> Taxa de aprendizado: Quanto o agente deve
+              ajustar seus conhecimentos com base na nova informação.
+            </li>
+            <li>
+              <strong>Gamma:</strong> Fator de desconto: Quanto o agente deve
+              valorizar recompensas futuras em relação às recompensas imediatas.
+            </li>
+          </ul>
+        </div>
       </section>
       <section class="container">
+        <div class="info-panel">
+          <p><strong>Legenda do Mapa:</strong></p>
+          <ul>
+            <li><span class="square free"></span> 1: Nó Livre</li>
+            <li><span class="square obstacle"></span> -100: Obstáculo</li>
+            <li><span class="square terminal-state"></span> 100: Terminal</li>
+            <li><span class="square out-of-bounds"></span> -1: Fora do Mapa</li>
+            <li><span class="square initial-state"></span> Estado Inicial</li>
+            <li><span class="square path"></span> Caminho Aprendido</li>
+          </ul>
+          <ul>
+            <li>Posição Atual: <span id="agent-position"></span></li>
+            <li>Direção: <span id="agent-direction"></span></li>
+
+            <li>Próxima Posição: <span id="agent-next-position"></span></li>
+            <li>Recompensa: <span id="agent-reward"></span></li>
+          </ul>
+        </div>
         <div id="map-container" class="main-content"></div>
+      </section>
+      <section class="q-table-section">
         <h2>Q-Table (Valores Máximos)</h2>
-        <div id="q-table-grid" class="q-grid"></div>
         <div id="q-table-learning"></div>
       </section>
     </main>
-
-    <div class="info-panel">
-      <p><strong>Legenda do Mapa:</strong></p>
-      <ul>
-        <li><span class="cell free"></span> 1: Nó Livre</li>
-        <li><span class="cell obstacle"></span> -100: Obstáculo</li>
-        <li><span class="cell terminal"></span> 100: Terminal</li>
-        <li>
-          <span class="cell out-of-bounds"></span> -1: Fora do Mapa Relevante
-        </li>
-        <li>
-          <span class="cell agent"></span> P: Posição Atual do Agente (Caminho
-          Aprendido)
-        </li>
-      </ul>
-      <p><strong>Legenda da Q-Table:</strong></p>
-      <ul>
-        <li>
-          Cada célula mostra o <strong>maior valor Q</strong> para aquele
-          estado.
-        </li>
-        <li>
-          O agente tenderá a seguir a direção que corresponde ao maior valor Q.
-        </li>
-        <li>
-          Valores positivos indicam bom caminho, negativos indicam penalidade.
-        </li>
-      </ul>
-    </div>
-
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <p>
+            <strong>Fundamentos de Inteligência Artificial</strong>
+          </p>
+          <p>Prof. Carine Webber</p>
+          <p>Universidade de Caxias do Sul - 2025</p>
+        </div>
+        <div class="footer-right">
+          <p>Desenvolvido por</p>
+          <p>Rejiane Fredrez</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Todos os direitos reservados.</p>
+      </div>
+    </footer>
   </body>
 </html>
