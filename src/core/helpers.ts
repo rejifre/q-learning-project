@@ -16,6 +16,13 @@ export class Vector2D {
   }
 }
 
+export const DIRECTIONS = {
+    CIMA: 0,    // Cima
+    BAIXO: 1,  // Baixo
+    ESQUERDA: 2,  // Esquerda
+    DIREITA: 3  // Direita
+};
+
 // Definindo as ações (convenção: 0=cima, 1=baixo, 2=esquerda, 3=direita)
 export const MOVES = [
     [-1, 0], // Cima (row-1, col)
@@ -23,5 +30,20 @@ export const MOVES = [
     [0, -1], // Esquerda (row, col-1)
     [0, 1],  // Direita (row, col+1)
 ];
-export const ACTION_NAMES = ['Cima', 'Baixo', 'Esquerda', 'Direita'];
 
+export interface IItemMap {
+  id: string;
+  numberId: string;
+  pos: Vector2D; // Posição no mapa
+  actionToText?: string;
+  qValue?: number[];
+  reward?: number;
+  direction: number; // Direção da ação (cima, baixo, esquerda, direita)
+}
+
+export interface MappedCell {
+  id: string;
+  numberId: string;
+  pos: Vector2D; // Posição no mapa
+  value: number;
+}

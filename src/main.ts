@@ -12,8 +12,11 @@ class QLearningApp {
   trainButton: HTMLButtonElement;
   resetButton: HTMLButtonElement;
   startPoint = new Vector2D(9, 4); // Ponto de partida fixo
-  table: TableLearning
-  
+  table: TableLearning;
+  agentPositionElement: HTMLElement;
+  agentNextPositionElement: HTMLElement;
+  agentRewardElement: HTMLElement;
+  directionElement: HTMLElement;
 
   constructor() {
     // Inicializa o mapa do projeto
@@ -26,11 +29,15 @@ class QLearningApp {
     this.resetButton = document.getElementById(
       "resetButton"
     ) as HTMLButtonElement;
+    this.agentPositionElement = document.getElementById("agent-position")!;
+    this.agentNextPositionElement = document.getElementById("agent-next-position")!;
+    this.agentRewardElement = document.getElementById("agent-reward")!;
+    this.directionElement = document.getElementById("agent-direction")!;
 
     this.#setupEventListeners();
-    this.#projectMap.renderMap(this.startPoint);
 
-    this.table = new TableLearning(this.#projectMap.getMapList());
+    this.#projectMap.renderMap(this.startPoint);
+    this.table = new TableLearning(this.#projectMap.getTableList());
     this.table.createTable(); // Cria a tabela Q no DOM
   }
 
@@ -50,7 +57,7 @@ class QLearningApp {
 
     this.#qlearningAgent.init(); // Reinicializa a tabela Q
     this.#initializeTraining();
-    this.trainingInterval = setInterval(() => this.#runEpisode(), 5);
+    this.trainingInterval = setInterval(() => this.#runEpisode(), 10);
   }
 
   pauseTraining() {
@@ -134,6 +141,11 @@ class QLearningApp {
       const reward = this.#qlearningAgent.getReward(nextPos);
 
       this.#qlearningAgent.updateQValue(current, actionIndex, reward, nextPos);
+      this.table.updateTableByPosition(current, this.#qlearningAgent.getQValueAt(current, actionIndex), actionIndex);
+
+      this.#updateInfo(current, nextPos, reward, actionIndex);
+
+       this.#projectMap.renderMap(this.startPoint, [current]); // Atualiza o mapa com a posição atual
 
       // Se bateu em obstáculo ou saiu do mapa, termina o episódio
       if (
@@ -150,8 +162,6 @@ class QLearningApp {
 
       current = nextPos.clone();
       steps++;
-
-      this.#projectMap.renderMap(this.startPoint, [current]); // Atualiza o mapa com a posição atual
     }
   }
 
@@ -186,6 +196,15 @@ class QLearningApp {
     }
 
     return path;
+  }
+
+  #updateInfo(current: Vector2D, next: Vector2D, reward: number, direction: number = 0) {
+    this.agentPositionElement.textContent = `(${current.x}, ${current.y})`;
+    this.agentNextPositionElement.textContent = `(${next.x}, ${next.y})`;
+    this.agentRewardElement.textContent = `${reward}`;
+    this.directionElement.textContent = `Direção: ${MOVES[direction].join(", ")}`;
+    const value = `Ação: ${direction}, Posição Atual: (${current.x}, ${current.y}), Próxima Posição: (${next.x}, ${next.y}), Recompensa: ${reward}`;
+    console.log(value); // Log para depuração
   }
 }
 

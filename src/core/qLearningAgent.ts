@@ -158,6 +158,13 @@ export class QLearningAgent {
     // Salva o novo valor Q na tabela
     this.qTable[current.x][current.y][actionIndex] = newQValue;
 
-    console.log(`Q[${current.x}, ${current.y}, ${actionIndex}] atualizado: ${currentQValue} → ${newQValue}`);
+    //console.log(`Q[${current.x}, ${current.y}, ${actionIndex}] atualizado: ${currentQValue} → ${newQValue}`);
+  }
+
+  getQValueAt(pos: Vector2D, actionIndex: number): number {
+    if (pos.x < 0 || pos.x >= this.mapRows || pos.y < 0 || pos.y >= this.mapCols) {
+      return 0; // Fora dos limites do mapa
+    }
+    return this.qTable[pos.x][pos.y][actionIndex];
   }
 }

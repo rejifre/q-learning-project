@@ -1,25 +1,6 @@
-import type { Vector2D } from "./helpers";
-
-export interface IItemMap {
-  id: string;
-  numberId: string;
-  row: number;
-  col: number;
-  value: number;
-  actionTo?: string;
-  actionToText?: string;
-  qValue?: number[];
-  reward?: number;
-}
-
-export interface MappedCell {
-  id: string;
-  numberId: string;
-  row: number;
-  col: number;
-  value: number;
-}
-
+import { MOVES, Vector2D } from "./helpers";
+import type { IItemMap } from "./helpers";
+import type { MappedCell } from "./helpers";
 export class ProjectMap {
   #mapData: number[][];
   #mapList: string[] = [];
@@ -111,7 +92,7 @@ export class ProjectMap {
       for (let j = 0; j < rowData.length; j++) {
         let cellValue = rowData[j];
         if (agentPos.x === i && agentPos.y === j) {
-          cellValue = 2; // Define o estado inicial do agente
+          cellValue = 0; // Define o estado inicial do agente
         }
 
         const cellElement = this.#createCellElement(i, j, cellValue, count);
@@ -139,7 +120,7 @@ export class ProjectMap {
     const cellElement = document.createElement("div");
 
     if (cellValue === -1) {
-      cellElement.classList.add(`cell-R${i}-C${j}-non-map`, "non-map");
+      cellElement.classList.add(`cell-R${i}-C${j}-out-of-bounds`, "out-of-bounds");
       return cellElement;
     }
 
@@ -161,7 +142,7 @@ export class ProjectMap {
       case -100:
         cellElement.classList.add("obstacle");
         break;
-      case 2:
+      case 0:
         cellElement.classList.add("initial-state");
         break;
       case 100:
@@ -212,8 +193,7 @@ export class ProjectMap {
         .map((cell) => ({
           id: `S${row + 1}_${cell.col + 1}`,
           numberId: (count++).toString(),
-          row,
-          col: cell.col,
+          pos: new Vector2D(row, cell.col),
           value: cell.value,
         }))
     );
@@ -227,20 +207,19 @@ export class ProjectMap {
     const result: IItemMap[] = [];
 
     list.forEach((item) => {
-      const neighbors = this.getNeighborIds(item.row, item.col);
+      const neighbors = this.getNeighborIds(item.pos);
 
       neighbors.forEach((nb) => {
         const neighborItem = list.find(
-          (l) => l.row === nb.row && l.col === nb.col
+          (l) => l.pos.equals(nb.neighbor) && l.value !== -1
         );
         if (neighborItem) {
           result.push({
             ...item,
             numberId: `S${item.numberId}`,
-            actionTo: neighborItem.numberId,
             actionToText: `A${item.numberId}-${neighborItem.numberId}`,
-            qValue: qTable ? qTable[item.row][item.col] : undefined,
-            reward: 0,
+            qValue: qTable ? qTable[item.pos.x][item.pos.y] : undefined,
+            direction: nb.direction,
           });
         }
       });
@@ -253,18 +232,11 @@ export class ProjectMap {
    * Obtém os vizinhos válidos de uma célula
    */
   private getNeighborIds(
-    row: number,
-    col: number
-  ): { row: number; col: number }[] {
-    const directions = [
-      [-1, 0], // up
-      [1, 0],  // down
-      [0, -1], // left
-      [0, 1],  // right
-    ];
+    pos: Vector2D,
+  ): {direction: number, neighbor: Vector2D }[] {
 
-    return directions
-      .map(([dRow, dCol]) => [row + dRow, col + dCol])
+    return MOVES
+      .map(([dRow, dCol], direction) => [pos.x + dRow, pos.y + dCol, direction])
       .filter(
         ([r, c]) =>
           r >= 0 && 
@@ -273,7 +245,7 @@ export class ProjectMap {
           c < this.getMapCols() && 
           this.#mapData[r][c] !== -1
       )
-      .map(([r, c]) => ({ row: r, col: c }));
+      .map(([r, c, direction]) => ({ direction, neighbor: new Vector2D(r, c) }));
   }
 
 }
