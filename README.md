@@ -16,7 +16,6 @@ Um projeto educacional demonstrando o algoritmo Q-Learning implementado em TypeS
 
 - **Frontend**: TypeScript, HTML5, CSS3
 - **Build**: Vite 6.3.5
-- **Styling**: TailwindCSS 4.1.10
 - **Deploy**: GitHub Pages
 
 ### Local
@@ -117,4 +116,4 @@ Este projeto é desenvolvido para fins educacionais como parte do curso de Funda
 
 ## Contribuições
 
-Este é um projeto acadêmico. Sugestões e melhorias são bem-vindas via Issues.
+Este é um projeto acadêmico. Sugestões e melhorias são bem-vindas.
