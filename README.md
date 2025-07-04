@@ -96,7 +96,7 @@ src/
 └── assets/                # Recursos visuais
 ```
 
-## 📈 Processo de Aprendizado
+## Processo de Aprendizado
 
 1. **Inicialização**: Agente no ponto (9,4), Q-table zerada
 2. **Episódios**: Loop de 1000 iterações (configurável)
