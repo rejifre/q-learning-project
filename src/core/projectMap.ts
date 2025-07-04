@@ -101,7 +101,7 @@ export class ProjectMap {
           count++;
           this.#mapList.push(cellElement.id);
         }
-        if (path.some((value: Vector2D) => value.x === i && value.y === j) && cellValue !== 2 && (this.#mapData[i][j] !== this.REWARD_TERMINAL)) {
+        if (path.some((value: Vector2D) => value.x === i && value.y === j) && cellValue !== 0 && (this.#mapData[i][j] !== this.REWARD_TERMINAL)) {
 
           cellElement.classList.add("path");
         }
